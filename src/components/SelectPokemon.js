@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 export function SelectPokemon(props) {
     return (
         <div className="SelectPokemon">
-            <select value={props.searchValue} onChange={e => {props.updateSearch(e.target.value); props.handleSubmit(e)}}   >
+            <select  onChange={e => {props.updateSearch(e.target.value); props.handleSubmit(e)}}   >
             {/* <select onChange={e => props.updateSearch(e.target.value)}  value={'select...'} > */}
 
                 <option value="abomasnow">abomasnow</option>

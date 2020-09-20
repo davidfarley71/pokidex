@@ -45,7 +45,7 @@ function App(props) {
   let handleSubmit = (event) => {
     event.preventDefault();
     props.addItem(event.target.value)
-    axios.get("https://pokeapi.co/api/v2/pokemon/" + searchValue)
+    axios.get("https://pokeapi.co/api/v2/pokemon/" + event.target.value)
       .then(function (response) {
         console.log(response.data)
         getEvolution(response.data.species.url)
