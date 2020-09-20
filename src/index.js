@@ -3,7 +3,8 @@ import ReactDOM from "react-dom";
 import { createStore, combineReducers } from 'redux'
 import { Provider } from "react-redux";
 import * as serviceWorker from './serviceWorker';
-
+import {Reducer} from './redux/reducers'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import App from "./App";
 
 // If you want your app to work offline and load faster, you can change
@@ -11,39 +12,8 @@ import App from "./App";
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
 
-const todoReducer = (state = {
-    SearchArray: [],
-    reduxHistory: []
-}, action) => {
-    switch (action.type) {
-        case "add":
-            state = {
-                ...state,
-                SearchArray: [...state.SearchArray, action.payload],
-                reduxHistory: [...state.reduxHistory, action.payload]
-            };
-            break;
-        case "remove":
-            const removeindex = state.SearchArray.indexOf(action.payload)
-            let temp = state.SearchArray.splice(removeindex,1)
-            
-            console.log( state.SearchArray)
-            state = {
-                ...state,
-                SearchArray: state.SearchArray,
-                // .map((task, index) => {
-                //     console.log(index)
-                //     return index === removeindex ? action.payload : task
-                // }),
-                reduxHistory: [...state.reduxHistory, action.payload]
-            };
-            break;
-    }
-    return state;
-};
 
-
-export const store = createStore(combineReducers({ todoReducer }));
+export const store = createStore(combineReducers({ Reducer: Reducer }));
 
 store.subscribe(() => {
     console.log("Store updated!", store.getState());

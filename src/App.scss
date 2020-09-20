@@ -1,0 +1,33 @@
+.App {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.5fr;
+  grid-template-rows: 50px 1fr;
+  height: 98vh;
+  .inputForm {
+    display: flex;
+    align-items: center;
+
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .toast {
+    height: 150px;
+    grid-row: 1;
+  }
+}
+
+.searchHistory {
+  border: solid blue;
+
+  text-align: center;
+  grid-column: 3;
+  grid-row: 2;
+  overflow-x: auto;
+  li {
+    list-style: none;
+    margin: 10px 0 5px 0;
+    .deleteButton {
+      float: right;
+    }
+  }
+}
