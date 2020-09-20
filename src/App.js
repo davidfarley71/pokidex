@@ -10,9 +10,10 @@ import Toast from 'react-bootstrap/Toast';
 import axios from 'axios'
 import { Generations } from './components/Generations'
 import { Abilities } from './components/Abilities'
+import { SelectPokemon } from './components/SelectPokemon'
 
 function App(props) {
-  let [searchValue, updateSearch] = useState("")
+  let [searchValue, updateSearch] = useState("select")
   let [abilities, updateabilities] = useState([])
   let [color, updateColor] = useState([])
   let [show, setShow] = useState(false);
@@ -43,6 +44,7 @@ function App(props) {
 
   let handleSubmit = (event) => {
     event.preventDefault();
+    props.addItem(event.target.value)
     axios.get("https://pokeapi.co/api/v2/pokemon/" + searchValue)
       .then(function (response) {
         console.log(response.data)
@@ -70,7 +72,43 @@ function App(props) {
         updateUltra(response.data.sprites.versions["generation-vii"]['ultra-sun-ultra-moon'])
         updateEightIcons(response.data.sprites.versions["generation-viii"]['icons'])
 
-        props.addItem(searchValue)
+      })
+      .catch(function (error) {
+        console.log(error);
+        setShow(true)
+      });
+  }
+
+  function requestData(value){
+    updateSearch(value)
+    axios.get("https://pokeapi.co/api/v2/pokemon/" + value)
+      .then(function (response) {
+        console.log(response.data)
+        // getEvolution(response.data.species.url)
+
+        updateabilities(response.data.abilities)
+        updateColor(response.data.color)
+        updatePkemonName(response.data.name);
+        updateSprites(response.data.sprites)
+        updateRedBlue(response.data.sprites.versions["generation-i"]['red-blue'])
+        updateYellow(response.data.sprites.versions["generation-i"]['yellow'])
+        updateCrystal(response.data.sprites.versions["generation-ii"]['crystal'])
+        updateGold(response.data.sprites.versions["generation-ii"]['gold'])
+        updateSilver(response.data.sprites.versions["generation-ii"]['silver'])
+        updateEmerald(response.data.sprites.versions["generation-iii"]['emerald'])
+        updateFire(response.data.sprites.versions["generation-iii"]['firered-leafgreen'])
+        updateRuby(response.data.sprites.versions["generation-iii"]['ruby-sapphire'])
+        updateDiamond(response.data.sprites.versions["generation-iv"]['diamond-pearl'])
+        updateHeart(response.data.sprites.versions["generation-iv"]['heartgold-soulsilver'])
+        updatePlatinum(response.data.sprites.versions["generation-iv"]['platinum'])
+        updateblackWhite(response.data.sprites.versions["generation-v"]['black-white'])
+        updateomega(response.data.sprites.versions["generation-vi"]['omegaruby-alphasapphire'])
+        updateXY(response.data.sprites.versions["generation-vi"]['x-y'])
+        updateSevenIcons(response.data.sprites.versions["generation-vii"]['icons'])
+        updateUltra(response.data.sprites.versions["generation-vii"]['ultra-sun-ultra-moon'])
+        updateEightIcons(response.data.sprites.versions["generation-viii"]['icons'])
+
+        props.addItem(value)
       })
       .catch(function (error) {
         console.log(error);
@@ -83,7 +121,7 @@ function App(props) {
   let getEvolution = function (url) {
     axios.get(url)
       .then(function (response) {
-        
+
         axios.get(response.data.evolution_chain.url)
           .then(function (response) {
             console.log(response.data)
@@ -109,24 +147,23 @@ function App(props) {
 
   return (
     <div className="App">
-      <Toast className="toast" onClose={() => setShow(false)} show={show} delay={3000} autohide>
-        <Toast.Header>
-          <img
-            src="holder.js/20x20?text=%20"
-            className="rounded mr-2"
-            alt=""
-          />
-          <strong className="mr-auto">Error</strong>
-        </Toast.Header>
-        <Toast.Body>Sorry it looks like that pokemon doesn't exist. <br />
-        Please Check your spelling</Toast.Body>
-      </Toast>
+      
+{/* 
+      <div className='inputForm' >
+        <input  defaultValue={searchValue} placeholder="Search the pokidex!" onKeyPress={event => {
+                if (event.key === 'Enter') {
+                  requestData(event.target.value)
+                }
+              }}
+            />
+        <button onClick={e => requestData(e.target.value)}>Submit</button>
+        <SelectPokemon requestData={requestData} />
+      </div> */}
 
       <form className='inputForm' onSubmit={handleSubmit}>
-        <input onChange={e => updateSearch(e.target.value)} placeholder="Search the pokidex!"></input>
-        <select >
-          <option value=""></option>
-        </select>
+        <input defaultValue={searchValue} onChange={e => updateSearch(e.target.value)} placeholder="Search the pokidex!"></input>
+        <SelectPokemon updateSearch={updateSearch} handleSubmit={handleSubmit} />
+
       </form>
 
       <div className="main">
@@ -146,7 +183,7 @@ function App(props) {
           crystal={crystal}
           gold={gold}
           silver={silver}
-          emerald={emerald}x
+          emerald={emerald} x
           fire={fire}
           ruby={ruby}
           diamond={diamond}
@@ -159,12 +196,22 @@ function App(props) {
           ultra={ultra}
           EightIcons={EightIcons}
         />
-
-
       </div >
 
 
       <SearchHistory />
+      <Toast className="toast" onClose={() => setShow(false)} show={show} delay={3000} autohide>
+        <Toast.Header>
+          <img
+            src="holder.js/20x20?text=%20"
+            className="rounded mr-2"
+            alt=""
+          />
+          <strong className="mr-auto">Error</strong>
+        </Toast.Header>
+        <Toast.Body>Sorry it looks like that pokemon doesn't exist. <br />
+        Please Check your spelling</Toast.Body>
+      </Toast>
     </div>
   );
 }
