@@ -13,7 +13,7 @@ import { Abilities } from './components/Abilities'
 import { SelectPokemon } from './components/SelectPokemon'
 
 function App(props) {
-  let [searchValue, updateSearch] = useState("select")
+  let [searchValue, updateSearch] = useState("")
   let [abilities, updateabilities] = useState([])
   let [color, updateColor] = useState([])
   let [show, setShow] = useState(false);
@@ -160,8 +160,8 @@ function App(props) {
         <SelectPokemon requestData={requestData} />
       </div> */}
 
-      <form className='inputForm' onSubmit={handleSubmit}>
-        <input defaultValue={searchValue} onChange={e => updateSearch(e.target.value)} placeholder="Search the pokidex!"></input>
+      <form className='inputForm' onSubmit={e => handleSubmit(e)}>
+        {/* <input defaultValue={searchValue} onChange={e => updateSearch(e.target.value)} placeholder="Search the pokidex!"></input> */}
         <SelectPokemon updateSearch={updateSearch} handleSubmit={handleSubmit} />
 
       </form>
