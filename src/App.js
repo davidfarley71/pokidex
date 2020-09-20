@@ -48,7 +48,7 @@ function App(props) {
         console.log(response.data)
         getEvolution(response.data.species.url)
 
-        updateabilities(response.data.species.url)
+        updateabilities(response.data.abilities)
         updateColor(response.data.color)
         updatePkemonName(response.data.name);
         updateSprites(response.data.sprites)
@@ -133,7 +133,7 @@ function App(props) {
         <h1>{PokemonName}</h1>
         <img src={Sprites.front_default}></img>
 
-        <Abilities />
+        <Abilities abilities={abilities} />
 
 
 
