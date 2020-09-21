@@ -4,8 +4,6 @@ export function SelectPokemon(props) {
     return (
         <div className="SelectPokemon">
             <select  onChange={e => {props.updateSearch(e.target.value); props.handleSubmit(e)}}   >
-            {/* <select onChange={e => props.updateSearch(e.target.value)}  value={'select...'} > */}
-
                 <option value="abomasnow">abomasnow</option>
                 <option value="abomasnow-mega">abomasnow-mega</option>
                 <option value="abra">abra</option>
